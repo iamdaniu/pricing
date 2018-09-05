@@ -6,11 +6,12 @@ import de.daniu.home.pricing.database.TarifRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RepositoryPricingService implements PricingService {
+
     @Autowired
     private TarifEntityMapper mapper;
 
@@ -23,7 +24,12 @@ public class RepositoryPricingService implements PricingService {
     }
 
     @Override
-    public List<Tarif> getTarife() {
-        return new ArrayList<>(repository.findAll());
+    public List<? extends Tarif> getTarife() {
+        return repository.findAll();
+    }
+
+    @Override
+    public Optional<? extends Tarif> getTarif(String name) {
+        return repository.findById(name);
     }
 }
